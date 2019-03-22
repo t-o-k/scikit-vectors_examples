@@ -8,8 +8,11 @@ Link to the scikit-vectors repository: https://github.com/t-o-k/scikit-vectors
 
 Link to the wiki for the scikit-vectors library: https://github.com/t-o-k/scikit-vectors/wiki
 
-[[https://github.com/t-o-k/scikit-vectors_examples/blob/master/images/Trefoil_Knot_Tube.svg|Trefoil Knot Tube]]
+[Jupyter notebook](Trefoil Knot Tube.ipynb)\
+![Trefoil Knot Tube](images/Trefoil_Knot_Tube.svg)
 
-[[https://github.com/t-o-k/scikit-vectors_examples/blob/master/images/Bezier_Surfaces.svg|Frenet Frames along curve]]
+[Jupyter notebook](Bezier Surfaces.ipynb)\
+![Bezier Surfaces](images/Bezier_Surfaces.svg)
 
-[[https://github.com/t-o-k/scikit-vectors_examples/blob/master/images/Bezier_Surfaces.svg|Bezier Surfaces]]
+[Jupyter notebook](Frenet Frames along curve.ipynb)\
+![Frenet Frames along curve](images/Frenet_Frames_along_curve.svg)
