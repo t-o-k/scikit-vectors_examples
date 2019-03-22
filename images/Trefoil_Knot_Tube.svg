@@ -10,13 +10,15 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="269.896pt"
+   height="182.33922pt"
    version="1.1"
-   viewBox="0 0 378.92767 269.896"
-   width="378.92767pt"
+   viewBox="0 0 255.99998 182.33922"
+   width="255.99998pt"
    id="svg18969"
-   sodipodi:docname="Trefoil Knot Tube.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   sodipodi:docname="Trefoil_Knot_Tube.svg"
+   inkscape:version="0.91 r13725">
+  <title
+     id="title99367">Trefoil Knot Tube</title>
   <metadata
      id="metadata18973">
     <rdf:RDF>
@@ -25,7 +27,32 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title>Trefoil Knot Tube</dc:title>
+        <dc:date>2017, 2019</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Tor Olav Kristensen</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:identifier>Trefoil_Knot_Tube.svg</dc:identifier>
+        <dc:source>https://github.com/t-o-k/scikit-vectors_examples</dc:source>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Python</rdf:li>
+            <rdf:li>scikit-vectors example</rdf:li>
+            <rdf:li>Trefoil knot</rdf:li>
+            <rdf:li>Frenet frame</rdf:li>
+            <rdf:li>3D</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:description>Image created by the &quot;Trefoil Knot Tube&quot; example code for the scikit-vectors library</dc:description>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright 2017, 2019 Tor Olav Kristensen</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <cc:license
+           rdf:resource="" />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -38,16 +65,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1600"
-     inkscape:window-height="851"
+     inkscape:window-width="1631"
+     inkscape:window-height="931"
      id="namedview18971"
      showgrid="false"
      inkscape:zoom="1.1588694"
-     inkscape:cx="241.89331"
-     inkscape:cy="193.55029"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:cx="-206.06006"
+     inkscape:cy="193.55031"
+     inkscape:window-x="2816"
+     inkscape:window-y="40"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg18969"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -64,7 +91,7 @@
   </defs>
   <g
      id="g67369"
-     transform="matrix(1.5316694,0,0,1.5316694,-257.39207,-209.12255)"
+     transform="matrix(1.0347815,0,0,1.0347815,-173.89168,-141.28124)"
      style="stroke-linecap:butt;stroke-linejoin:round">
     <g
        style="stroke-linecap:butt;stroke-linejoin:round"

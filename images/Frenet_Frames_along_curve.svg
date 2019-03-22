@@ -10,13 +10,15 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="52.475262mm"
+   height="48.794025mm"
    version="1.1"
-   viewBox="0 0 275.31379 148.74877"
-   width="97.124588mm"
+   viewBox="0 0 256 138.31377"
+   width="90.311111mm"
    id="svg4609"
-   sodipodi:docname="Frenet Frames along curve.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   sodipodi:docname="Frenet_Frames_along_curve.svg"
+   inkscape:version="0.91 r13725">
+  <title
+     id="title85140">Frenet Frames along curve</title>
   <metadata
      id="metadata4613">
     <rdf:RDF>
@@ -25,8 +27,45 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title>Frenet Frames along curve</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Tor Olav Kristensen</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:date>2017, 2019</dc:date>
+        <dc:source>https://github.com/t-o-k/scikit-vectors_examples</dc:source>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Python</rdf:li>
+            <rdf:li>scikit-vectors example</rdf:li>
+            <rdf:li>Frenet frame</rdf:li>
+            <rdf:li>3D</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:description>Image created by the &quot;Frenet Frames along curve&quot; example code for the scikit-vectors library</dc:description>
+        <dc:identifier>Frenet_Frames_along_curve.svg</dc:identifier>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright 2017, 2019 Tor Olav Kristensen</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
       </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
@@ -38,8 +77,8 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1600"
-     inkscape:window-height="851"
+     inkscape:window-width="1839"
+     inkscape:window-height="1137"
      id="namedview4611"
      showgrid="false"
      fit-margin-top="0"
@@ -47,11 +86,11 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.1588694"
-     inkscape:cx="21.398351"
-     inkscape:cy="153.32278"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:cx="94.921143"
+     inkscape:cy="153.3228"
+     inkscape:window-x="2502"
+     inkscape:window-y="132"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg4609"
      units="mm" />
   <defs
@@ -66,7 +105,7 @@
   <g
      style="stroke-linecap:butt;stroke-linejoin:round"
      id="g8022"
-     transform="translate(-157.72352,-137.57369)">
+     transform="matrix(0.92984807,0,0,0.92984807,-146.65891,-127.92263)">
     <g
        style="stroke-linecap:butt;stroke-linejoin:round"
        id="Poly3DCollection_1">
