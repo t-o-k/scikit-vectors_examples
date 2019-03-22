@@ -1,4 +1,4 @@
-# scikit-vectors_examples
+# scikit-vectors examples
 
 This repository contains example files for the scikit-vectors Python library.
 
