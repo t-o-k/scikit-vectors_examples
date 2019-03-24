@@ -10,12 +10,12 @@ Link to the wiki for the scikit-vectors library: https://github.com/t-o-k/scikit
 
 ### Trefoil Knot Tube example
 [Jupyter notebook](Trefoil_Knot_Tube.ipynb)\
-![Trefoil Knot Tube](images/Trefoil_Knot_Tube.svg)
+![Trefoil Knot Tube](images/Trefoil_Knot_Tube.png)
 
 ### Bezier Surfaces example
 [Jupyter notebook](Bezier_Surfaces.ipynb)\
-![Bezier Surfaces](images/Bezier_Surfaces.svg)
+![Bezier Surfaces](images/Bezier_Surfaces.png)
 
 ### Frenet Frames along curve example
 [Jupyter notebook](Frenet_Frames_along_curve.ipynb)\
-![Frenet Frames along curve](images/Frenet_Frames_along_curve.svg)
+![Frenet Frames along curve](images/Frenet_Frames_along_curve.png)
