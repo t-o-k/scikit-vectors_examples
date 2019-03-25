@@ -7,6 +7,8 @@
 # 
 # Use of this source code is governed by a BSD-license that can be found in the LICENSE file.
 
+url = 'https://github.com/t-o-k/scikit-vectors_examples/'
+
 # This example has been tested with NumPy v1.15.3, Matplotlib v2.1.1.
 
 
@@ -183,6 +185,7 @@ surface_points = \
 # Show the trefoil knot tube
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_aspect(1)
 ax.set_title('Trefoil Knot Tube')
@@ -320,6 +323,7 @@ sl = (sl_across, sl_along)
 # Show some of the vectors calculated above
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Vectors towards surface')
 ax.scatter(
@@ -367,6 +371,7 @@ plt.show()
 pp_w = pp_o + vv_s *vector_length
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Vectors towards surface')
 ax.plot_wireframe(
@@ -412,6 +417,7 @@ plt.show()
 # Show the trefoil knot tube
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Trefoil Knot Tube with constant radius')
 for j in range(nr_of_points_along_curve-1):
@@ -461,6 +467,7 @@ assert rr.shape == surface_shape
 # Show the varying radii calculated above
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Radii of Trefoil Knot Tube')
 ax.plot_wireframe(angles_along, angles_across, rr, color='crimson')
@@ -485,6 +492,7 @@ pp_s = pp_o + vv_s * rr
 # Show the trefoil knot tube
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Trefoil Knot Tube with varying radius')
 ax.plot_wireframe(*pp_s, color='deeppink')
@@ -507,6 +515,7 @@ tri = \
     )
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Trefoil Knot Tube with varying radius')
 ax.plot_trisurf(
@@ -529,6 +538,7 @@ plt.show()
 # Show the trefoil knot tube
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Trefoil Knot Tube with varying radius')
 for j in range(nr_of_points_along_curve-1):
