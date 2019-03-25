@@ -7,7 +7,7 @@
 # 
 # Use of this source code is governed by a BSD-license that can be found in the LICENSE file.
 
-# This example has been tested with NumPy v1.15.3, Matplotlib v2.1.1
+# This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1
 
 
 # Get the necessary libraries
