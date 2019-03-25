@@ -9,7 +9,7 @@
 
 url = 'https://github.com/t-o-k/scikit-vectors_examples/'
 
-# This example has been tested with NumPy v1.15.3, Matplotlib v2.1.1.
+# This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1.
 
 
 # Get the necessary libraries
