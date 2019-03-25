@@ -7,7 +7,9 @@
 # 
 # Use of this source code is governed by a BSD-license that can be found in the LICENSE file.
 
-# This example has been tested with NumPy v1.15.3, Matplotlib v2.1.1
+url = 'https://github.com/t-o-k/scikit-vectors_examples/'
+
+# This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1.
 
 
 import operator
@@ -30,7 +32,8 @@ figure_dpi = 100
 
 class Bicubic_Bezier():
 
-    blend_fns =         [
+    blend_fns = \
+        [
             lambda s: (1 - s)**3,
             lambda s: 3 * s * (1 - s)**2,
             lambda s: 3 * s**2 * (1 - s),
@@ -125,11 +128,6 @@ p3d_ctrl = \
     )
 
 
-bb_x = Bicubic_Bezier(p3d_ctrl.x)
-bb_y = Bicubic_Bezier(p3d_ctrl.y)
-bb_z = Bicubic_Bezier(p3d_ctrl.z)
-
-
 surface_shape = nr_u, nr_v = (20, 30)
 
 Surface3D = \
@@ -140,6 +138,11 @@ Surface3D = \
         cunit = np.ones(surface_shape),
         functions = np_functions
     )
+
+
+bb_x = Bicubic_Bezier(p3d_ctrl.x)
+bb_y = Bicubic_Bezier(p3d_ctrl.y)
+bb_z = Bicubic_Bezier(p3d_ctrl.z)
 
 
 u, v = \
@@ -157,6 +160,7 @@ bezier_points = \
 
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Bicubic Bezier surface')
 ax.plot_wireframe(*p3d_ctrl, color='black')
@@ -179,6 +183,7 @@ tri = \
     )
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Bicubic Bezier surface')
 ax.plot_trisurf(
@@ -196,6 +201,7 @@ plt.show()
 
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Bicubic Bezier surface')
 for j in range(nr_v-2):
@@ -286,6 +292,7 @@ bezier_points_xn = bezier_points_yp.reorient(vyp, vxn)
 
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Cube like shape made with Bicubic Bezier surfaces')
 ax.plot_wireframe(*bezier_points_xp, color='red')
@@ -311,6 +318,7 @@ tri = \
     )
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Cube like shape made with Bicubic Bezier surfaces')
 ax.plot_trisurf(*bezier_points_xp(np.ndarray.flatten), triangles = tri.triangles, color = 'red')
