@@ -7,6 +7,8 @@
 # 
 # Use of this source code is governed by a BSD-license that can be found in the LICENSE file.
 
+url = 'https://github.com/t-o-k/scikit-vectors_examples/'
+
 # This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1
 
 
@@ -137,6 +139,7 @@ p_o = \
 # Show the curve
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Points along curve')
 ax.scatter(p_o.x, p_o.y, p_o.z, c='r', marker='.')
@@ -197,6 +200,7 @@ line_colors = 'rrrrggggbbbb'
 # Show the box corners and edges
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Box corners and edges')
 x, y, z = zip(*box_corners)
@@ -236,6 +240,7 @@ rectangle_colors = 'rrggbb'
 # Show the box sides
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Box sides')
 for indices, color in zip(rectangle_indices, rectangle_colors):
@@ -248,7 +253,6 @@ for indices, color in zip(rectangle_indices, rectangle_colors):
     rectangle.set_color(color)
     rectangle.set_edgecolor('k')
     ax.add_collection3d(rectangle)
-x, y, z = zip(*box_corners)
 ax.set_xlim(-0.5, +0.5)
 ax.set_ylim(-0.5, +0.5)
 ax.set_zlim(-0.5, +0.5)
@@ -297,6 +301,7 @@ v_n = v_t.cross(v_b)
 vector_length = 0.3
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Frenet Frames')
 ax.scatter(p_o.x, p_o.y, p_o.z, c='k', marker='.')
@@ -345,6 +350,7 @@ box_corners_transformed = \
 # Show the edges for all the reoriented boxes along the curve
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Reoriented boxes')
 for (i0, i1), color in zip(line_indices, line_colors):
@@ -371,6 +377,7 @@ plt.show()
 # Show the sides for all the reoriented boxes along the curve
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Reoriented boxes')
 for (i0, i1, i2, i3), color in zip(rectangle_indices, rectangle_colors):
@@ -409,6 +416,7 @@ color_b = (0.3, 0.3, 0.6, 1.0)
 rectangle_colors = 'mmyycc'
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Reoriented boxes')
 ax.set_facecolor('gray')
