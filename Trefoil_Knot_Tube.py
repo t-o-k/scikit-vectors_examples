@@ -192,12 +192,12 @@ ax.set_title('Trefoil Knot Tube')
 for j in range(nr_of_points_along_curve-1):
     for i in range(nr_of_points_across_curve-1):
         if i % 2 == 0:
-            color = 'black'
+            facecolor = 'black'
         else:
             if j % 2 == 0:
-                color = 'blue'
+                facecolor = 'blue'
             else:
-                color = 'mediumturquoise'
+                facecolor = 'mediumturquoise'
         x0, y0, z0 = surface_points[i  ]
         x1, y1, z1 = surface_points[i+1]
         p00 = (x0[j  ], y0[j  ], z0[j  ])
@@ -205,12 +205,12 @@ for j in range(nr_of_points_along_curve-1):
         p10 = (x1[j  ], y1[j  ], z1[j  ])
         p11 = (x1[j+1], y1[j+1], z1[j+1])
         triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
-        triangle_a.set_color(color)
-        triangle_a.set_edgecolor(color)
+        triangle_a.set_facecolor(facecolor)
+        triangle_a.set_edgecolor('grey')
         ax.add_collection3d(triangle_a)
         triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
-        triangle_b.set_color(color)
-        triangle_b.set_edgecolor(color)
+        triangle_b.set_color(facecolor)
+        triangle_b.set_edgecolor('grey')
         ax.add_collection3d(triangle_b)
 ax.set_xlim(-3.5, +3.5)
 ax.set_ylim(-3.5, +3.5)
@@ -264,6 +264,8 @@ pp_o = \
 
 
 # Alternative ways to do the same
+
+# pp_o = NP_3D_A2(*p_o)
 
 # pp_o = \
 #     NP_3D_A2(
@@ -440,11 +442,9 @@ for j in range(nr_of_points_along_curve-1):
         p11 = (pp_w.xx[c11], pp_w.yy[c11], pp_w.zz[c11])
         triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
         triangle_a.set_color(color)
-        triangle_a.set_edgecolor(color)
         ax.add_collection3d(triangle_a)
         triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
         triangle_b.set_color(color)
-        triangle_b.set_edgecolor(color)
         ax.add_collection3d(triangle_b)
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
@@ -557,11 +557,9 @@ for j in range(nr_of_points_along_curve-1):
         p11 = pp_s(lambda cv: cv[i+1, j+1])
         triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
         triangle_a.set_color(color)
-        triangle_a.set_edgecolor(color)
         ax.add_collection3d(triangle_a)
         triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
         triangle_b.set_color(color)
-        triangle_b.set_edgecolor(color)
         ax.add_collection3d(triangle_b)
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
