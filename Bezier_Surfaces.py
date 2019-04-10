@@ -314,9 +314,6 @@ for surface, color in zip(bezier_surfaces, 'rcgmby'):
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
-# ax.set_xlim(-1, +5)
-# ax.set_ylim(-4, +3)
-# ax.set_zlim(-1, +4)
 ax.view_init(elev=10, azim=20)
 plt.show()
 
