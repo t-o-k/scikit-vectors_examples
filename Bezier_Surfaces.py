@@ -9,16 +9,15 @@
 
 url = 'https://github.com/t-o-k/scikit-vectors_examples/'
 
+
 # This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1.
 
 
 import operator
 from functools import reduce
-import matplotlib.colors as colors
 import matplotlib.pyplot as plt
 import matplotlib.tri as mtri
 from mpl_toolkits.mplot3d import Axes3D
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 
 from skvectors import create_class_Cartesian_3D_Vector
@@ -53,7 +52,8 @@ class Bicubic_Bezier():
 
     def __call__(self, u, v):
 
-        return             self._sum(
+        return \
+            self._sum(
                 self.blend_fns[j](u) *
                 self._sum(
                     self.blend_fns[i](v) * self.points4x4[i][j]
@@ -176,6 +176,51 @@ ax.view_init(elev=-105, azim=-61)
 plt.show()
 
 
+# Select colors for the faces
+
+def select_color(i, j):
+
+    if (i + j) % 2 == 0:
+        color = 'navy'
+    elif j % 2 == 0:
+        color = 'lightseagreen'
+    else:
+        color = 'deeppink'
+
+    return color
+
+
+face_colors = \
+    [
+        [
+            select_color(i, j)
+            for j in range(nr_v-1)
+        ]
+        for i in range(nr_u-1)
+    ]
+
+
+fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
+ax = Axes3D(fig)
+ax.set_title('Bicubic Bezier surface')
+ax.plot_surface(
+    bezier_points.x, bezier_points.y, bezier_points.z,
+    rstride = 1, cstride = 1,
+    facecolors = face_colors,
+    # cmap = plt.cm.inferno,
+    # shade = False
+)
+ax.set_xlabel('x-axis')
+ax.set_ylabel('y-axis')
+ax.set_zlabel('z-axis')
+ax.set_xlim(-1, +4)
+ax.set_ylim(-1, +4)
+ax.set_zlim(-4, +3)
+ax.view_init(elev=5, azim=-46)
+plt.show()
+
+
 tri = \
     mtri.Triangulation(
         u.flatten(),
@@ -191,47 +236,12 @@ ax.plot_trisurf(
     bezier_points.y.flatten(),
     bezier_points.z.flatten(),
     triangles = tri.triangles,
-    cmap = plt.cm.Spectral
+    cmap = plt.cm.inferno
 )
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
-ax.view_init(elev=-135, azim=40)
-plt.show()
-
-
-fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
-fig.text(0.01, 0.01, url)
-ax = Axes3D(fig)
-ax.set_title('Bicubic Bezier surface')
-for j in range(nr_v-2):
-    for i in range(nr_u-2):
-        if (i + j) % 2 == 0:
-            color = 'navy'
-        else:
-            if j % 2 == 0:
-                color = 'lightseagreen'
-            else:
-                color = 'deeppink'
-        p00 = bezier_points(lambda cv: cv[i  , j  ])
-        p01 = bezier_points(lambda cv: cv[i  , j+1])
-        p10 = bezier_points(lambda cv: cv[i+1, j  ])
-        p11 = bezier_points(lambda cv: cv[i+1, j+1])
-        triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
-        triangle_a.set_color(color)
-        # triangle_a.set_edgecolor('black')
-        ax.add_collection3d(triangle_a)
-        triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
-        triangle_b.set_color(color)
-        # triangle_b.set_edgecolor('black')
-        ax.add_collection3d(triangle_b)
-ax.set_xlabel('x-axis')
-ax.set_ylabel('y-axis')
-ax.set_zlabel('z-axis')
-ax.set_xlim(-1, +4)
-ax.set_ylim(-1, +4)
-ax.set_zlim(-4, +3)
-ax.view_init(elev=5, azim=-46)
+ax.view_init(elev=-154, azim=50)
 plt.show()
 
 
@@ -271,12 +281,12 @@ bb_x = Bicubic_Bezier(p3d_ctrl.x)
 bb_y = Bicubic_Bezier(p3d_ctrl.y)
 bb_z = Bicubic_Bezier(p3d_ctrl.z)
 
-vxp = Surface3D(x=+1, y= 0, z= 0)
-vxn = Surface3D(x=-1, y= 0, z= 0)
-vyp = Surface3D(x= 0, y=+1, z= 0)
-vyn = Surface3D(x= 0, y=-1, z= 0)
-vzp = Surface3D(x= 0, y= 0, z=+1)
-vzn = Surface3D(x= 0, y= 0, z=-1)
+vxp = +Surface3D.basis_x()
+vxn = -Surface3D.basis_x()
+vyp = +Surface3D.basis_y()
+vyn = -Surface3D.basis_y()
+vzp = +Surface3D.basis_z()
+vzn = -Surface3D.basis_z()
 
 bezier_points_xp = \
     Surface3D(
@@ -284,23 +294,30 @@ bezier_points_xp = \
         y = bb_y(u, v),
         z = bb_z(u, v)
     )
+
 bezier_points_yp = bezier_points_xp.reorient(vxp, vyp)
 bezier_points_yn = bezier_points_xp.reorient(vxp, vyn)
 bezier_points_zp = bezier_points_xp.reorient(vxp, vzp)
 bezier_points_zn = bezier_points_xp.reorient(vxp, vzn)
 bezier_points_xn = bezier_points_yp.reorient(vyp, vxn)
 
+bezier_surfaces = \
+    [
+        bezier_points_xp,
+        bezier_points_xn,
+        bezier_points_yp,
+        bezier_points_yn,
+        bezier_points_zp,
+        bezier_points_zn
+    ]
+
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Cube like shape made with Bicubic Bezier surfaces')
-ax.plot_wireframe(*bezier_points_xp, color='red')
-ax.plot_wireframe(*bezier_points_xn, color='cyan')
-ax.plot_wireframe(*bezier_points_yp, color='green')
-ax.plot_wireframe(*bezier_points_yn, color='magenta')
-ax.plot_wireframe(*bezier_points_zp, color='blue')
-ax.plot_wireframe(*bezier_points_zn, color='yellow')
+for surface, color in zip(bezier_surfaces, 'rcgmby'):
+    ax.plot_wireframe(*surface, color=color)
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
@@ -321,16 +338,14 @@ fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Cube like shape made with Bicubic Bezier surfaces')
-ax.plot_trisurf(*bezier_points_xp(np.ndarray.flatten), triangles = tri.triangles, color = 'red')
-ax.plot_trisurf(*bezier_points_xn(np.ndarray.flatten), triangles = tri.triangles, color = 'cyan')
-ax.plot_trisurf(*bezier_points_yp(np.ndarray.flatten), triangles = tri.triangles, color = 'green')
-ax.plot_trisurf(*bezier_points_yn(np.ndarray.flatten), triangles = tri.triangles, color = 'magenta')
-ax.plot_trisurf(*bezier_points_yn(np.ndarray.flatten), triangles = tri.triangles, color = 'magenta')
-ax.plot_trisurf(*bezier_points_zp(np.ndarray.flatten), triangles = tri.triangles, color = 'blue')
-ax.plot_trisurf(*bezier_points_zn(np.ndarray.flatten), triangles = tri.triangles, color = 'yellow')
+for surface, color in zip(bezier_surfaces, 'rcgmby'):
+    ax.plot_trisurf(
+        *surface(np.ndarray.flatten),
+        triangles = tri.triangles,
+        color = color
+    )
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
 ax.view_init(elev=-145, azim=4)
 plt.show()
-
