@@ -9,12 +9,12 @@
 
 url = 'https://github.com/t-o-k/scikit-vectors_examples/'
 
+
 # This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1.
 
 
 # Get the necessary libraries
 
-import matplotlib.colors as colors
 import matplotlib.pyplot as plt
 import matplotlib.tri as mtri
 from mpl_toolkits.mplot3d import Axes3D
@@ -177,9 +177,47 @@ tube_radius = 0.3
 surface_points = \
     [
         p_o + v_n.axis_rotate(v_t, angle) * tube_radius
-#         p_o + v_n.axis_rotate(v_t, angle) * tube_radius * (3 + np.sin(2 * angle)) / 2
+        # p_o + v_n.axis_rotate(v_t, angle) * tube_radius * (3 + np.sin(2 * angle)) / 2
         for angle in angles_across_curve
     ]
+
+
+# Function for selecting color for each face
+
+def select_color(i, j):
+
+    if i % 2 == 0:
+        color = 'black'
+    else:
+        if j % 2 == 0:
+            color = 'blue'
+        else:
+            color = 'mediumturquoise'
+
+    return color
+
+
+quads_colors = \
+    [
+        select_color(i, j)
+        for i in range(nr_of_points_across_curve-1)
+        for j in range(nr_of_points_along_curve-1)
+    ]
+
+
+# Function to extract coordinates for the quad patches.
+# (It's only needed for the plot below.)
+
+def quads(points_2d):
+
+    sl0 = slice(None, -1)
+    sl1 = slice(+1, None)
+    for points0, points1 in zip(points_2d[sl0], points_2d[sl1]):
+        points00 = zip(points0.x[sl0], points0.y[sl0], points0.z[sl0])
+        points01 = zip(points0.x[sl1], points0.y[sl1], points0.z[sl1])
+        points10 = zip(points1.x[sl0], points1.y[sl0], points1.z[sl0])
+        points11 = zip(points1.x[sl1], points1.y[sl1], points1.z[sl1])
+        yield from zip(points00, points01, points10, points11)
 
 
 # Show the trefoil knot tube
@@ -189,29 +227,15 @@ fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_aspect(1)
 ax.set_title('Trefoil Knot Tube')
-for j in range(nr_of_points_along_curve-1):
-    for i in range(nr_of_points_across_curve-1):
-        if i % 2 == 0:
-            facecolor = 'black'
-        else:
-            if j % 2 == 0:
-                facecolor = 'blue'
-            else:
-                facecolor = 'mediumturquoise'
-        x0, y0, z0 = surface_points[i  ]
-        x1, y1, z1 = surface_points[i+1]
-        p00 = (x0[j  ], y0[j  ], z0[j  ])
-        p01 = (x0[j+1], y0[j+1], z0[j+1])
-        p10 = (x1[j  ], y1[j  ], z1[j  ])
-        p11 = (x1[j+1], y1[j+1], z1[j+1])
-        triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
-        triangle_a.set_facecolor(facecolor)
-        triangle_a.set_edgecolor('grey')
-        ax.add_collection3d(triangle_a)
-        triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
-        triangle_b.set_color(facecolor)
-        triangle_b.set_edgecolor('grey')
-        ax.add_collection3d(triangle_b)
+for (p00, p01, p10, p11), face_color in zip(quads(surface_points), quads_colors):
+    triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
+    triangle_a.set_facecolor(face_color)
+    triangle_a.set_edgecolor('grey')
+    ax.add_collection3d(triangle_a)
+    triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
+    triangle_b.set_facecolor(face_color)
+    triangle_b.set_edgecolor('grey')
+    ax.add_collection3d(triangle_b)
 ax.set_xlim(-3.5, +3.5)
 ax.set_ylim(-3.5, +3.5)
 ax.set_zlim(-3.5, +3.5)
@@ -219,7 +243,6 @@ ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
 ax.view_init(elev=90, azim=-120)
-
 plt.show()
 
 
@@ -368,9 +391,12 @@ ax.view_init(elev=36, azim=-60)
 plt.show()
 
 
-# Show some of the vectors calculated above
+# Calculate all the position vectors for the points on the surface of the tube
 
-pp_w = pp_o + vv_s *vector_length
+pp_w = pp_o + vv_s * vector_length
+
+
+# Show some of the vectors calculated above
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.01, 0.01, url)
@@ -416,44 +442,53 @@ ax.view_init(elev=30, azim=-70)
 plt.show()
 
 
+# Select colors for the faces
+
+def select_color(i, j):
+
+    k = (i + 3 * j) % 6
+#     k = (3 * i + 2 * j) % 6
+    if k < 2:
+        color = 'mediumturquoise'
+    elif k < 4:
+        color = 'black'
+    else:
+        color = 'orchid'
+
+    return color
+
+
+face_colors = \
+    [
+        [
+            select_color(i, j)
+            for i in range(nr_of_points_along_curve - 1)
+        ]
+        for j in range(nr_of_points_across_curve - 1)
+    ]
+
+
 # Show the trefoil knot tube
 
 fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Trefoil Knot Tube with constant radius')
-for j in range(nr_of_points_along_curve-1):
-    for i in range(nr_of_points_across_curve-1):
-        k = (3 * i + j) % 6
-#         k = (2 * i + 3 * j) % 6
-        if k < 2:
-            color = 'mediumturquoise'
-        elif k < 4:
-            color = 'black'
-        else:
-            color = 'orchid'
-        c00 = (i  , j  )
-        c01 = (i  , j+1)
-        c10 = (i+1, j  )
-        c11 = (i+1, j+1)
-        p00 = (pp_w.xx[c00], pp_w.yy[c00], pp_w.zz[c00])
-        p01 = (pp_w.xx[c01], pp_w.yy[c01], pp_w.zz[c01])
-        p10 = (pp_w.xx[c10], pp_w.yy[c10], pp_w.zz[c10])
-        p11 = (pp_w.xx[c11], pp_w.yy[c11], pp_w.zz[c11])
-        triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
-        triangle_a.set_color(color)
-        ax.add_collection3d(triangle_a)
-        triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
-        triangle_b.set_color(color)
-        ax.add_collection3d(triangle_b)
+ax.plot_surface(
+    pp_w.xx, pp_w.yy, pp_w.zz,
+    rstride = 1, cstride = 1,
+    facecolors = face_colors,
+    # cmap = plt.cm.inferno,
+    # shade = False
+)
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
 ax.set_xlim(-4, +4)
 ax.set_ylim(-4, +4)
 ax.set_zlim(-4, +4)
+# ax.view_init(elev=30, azim=-70)
 ax.view_init(elev=90, azim=-120)
-
 plt.show()
 
 
@@ -470,17 +505,20 @@ fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Radii of Trefoil Knot Tube')
-ax.plot_wireframe(angles_along, angles_across, rr, color='crimson')
+ax.plot_wireframe(angles_along, angles_across, rr, rstride=1, cstride=1, color='crimson')
+ax.scatter(angles_along, angles_across, rr, color='darkblue', marker = '.')
+# ax.plot_surface(angles_along, angles_across, rr, rstride=1, cstride=1, cmap=plt.cm.Spectral)
 ax.set_xlabel('Angle along curve')
 ax.set_ylabel('Angle across curve')
 ax.set_zlabel('Radius')
 ax.set_xlim(-np.pi, +np.pi)
 ax.set_ylim(-np.pi, +np.pi)
+ax.set_zlim(0.00, 0.65)
 ax.set_xticklabels(pi_labels)
 ax.set_yticklabels(pi_labels)
 ax.set_xticks(pi_ticks)
 ax.set_yticks(pi_ticks)
-ax.view_init(elev=40, azim=-60)
+ax.view_init(elev=64, azim=-53)
 plt.show()
 
 
@@ -496,6 +534,55 @@ fig.text(0.01, 0.01, url)
 ax = Axes3D(fig)
 ax.set_title('Trefoil Knot Tube with varying radius')
 ax.plot_wireframe(*pp_s, color='deeppink')
+ax.set_xlabel('x-axis')
+ax.set_ylabel('y-axis')
+ax.set_zlabel('z-axis')
+ax.set_xlim(-4, +4)
+ax.set_ylim(-4, +4)
+ax.set_zlim(-4, +4)
+ax.view_init(elev=90, azim=-120)
+plt.show()
+
+
+# Select colors for all the faces
+
+def select_color(i, j):
+
+    if j % 2 == 0:
+    # if (i + j) % 2 == 0:
+        color = 'navy'
+    else:
+        if i % 2 == 0:
+            color = 'lightseagreen'
+        else:
+            color = 'deeppink'
+
+    return color
+
+
+face_colors = \
+    [
+        [
+            select_color(i, j)
+            for i in range(nr_of_points_along_curve - 1)
+        ]
+        for j in range(nr_of_points_across_curve - 1)
+    ]
+
+
+# Show the trefoil knot tube
+
+fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.01, 0.01, url)
+ax = Axes3D(fig)
+ax.set_title('Trefoil Knot Tube with varying radius')
+ax.plot_surface(
+    *pp_s,
+    rstride = 1, cstride = 1,
+    facecolors = face_colors,
+    # cmap=plt.cm.inferno,
+    # shade = False
+)
 ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
@@ -533,40 +620,3 @@ ax.set_ylim(-4, +4)
 ax.set_zlim(-4, +4)
 ax.view_init(elev=90, azim=-120)
 plt.show()
-
-
-# Show the trefoil knot tube
-
-fig = plt.figure(figsize=figure_size, dpi=figure_dpi)
-fig.text(0.01, 0.01, url)
-ax = Axes3D(fig)
-ax.set_title('Trefoil Knot Tube with varying radius')
-for j in range(nr_of_points_along_curve-1):
-    for i in range(nr_of_points_across_curve-1):
-        if i % 2 == 0:
-#         if (i + j) % 2 == 0:
-            color = 'navy'
-        else:
-            if j % 2 == 0:
-                color = 'lightseagreen'
-            else:
-                color = 'deeppink'
-        p00 = pp_s(lambda cv: cv[i  , j  ])
-        p01 = pp_s(lambda cv: cv[i  , j+1])
-        p10 = pp_s(lambda cv: cv[i+1, j  ])
-        p11 = pp_s(lambda cv: cv[i+1, j+1])
-        triangle_a = Poly3DCollection([ [ p00, p10, p11 ] ])
-        triangle_a.set_color(color)
-        ax.add_collection3d(triangle_a)
-        triangle_b = Poly3DCollection([ [ p11, p01, p00 ] ])
-        triangle_b.set_color(color)
-        ax.add_collection3d(triangle_b)
-ax.set_xlabel('x-axis')
-ax.set_ylabel('y-axis')
-ax.set_zlabel('z-axis')
-ax.set_xlim(-4, +4)
-ax.set_ylim(-4, +4)
-ax.set_zlim(-4, +4)
-ax.view_init(elev=90, azim=-120)
-plt.show()
-
