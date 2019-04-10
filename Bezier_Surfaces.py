@@ -13,8 +13,6 @@ url = 'https://github.com/t-o-k/scikit-vectors_examples/'
 # This example has been tested with NumPy v1.15.3 and Matplotlib v2.1.1.
 
 
-import operator
-from functools import reduce
 import matplotlib.pyplot as plt
 import matplotlib.tri as mtri
 from mpl_toolkits.mplot3d import Axes3D
@@ -39,24 +37,19 @@ class Bicubic_Bezier():
             lambda s: s**3
         ]
 
-    @staticmethod
-    def _sum(values):
 
-        return reduce(operator.add, values)
+    def __init__(self, ctrl_points_4x4):
 
-
-    def __init__(self, points4x4):
-
-        self.points4x4 = points4x4
+        self.ctrl_points_4x4 = ctrl_points_4x4
 
 
     def __call__(self, u, v):
 
         return \
-            self._sum(
+            sum(
                 self.blend_fns[j](u) *
-                self._sum(
-                    self.blend_fns[i](v) * self.points4x4[i][j]
+                sum(
+                    self.blend_fns[i](v) * self.ctrl_points_4x4[i][j]
                     for i in range(4)
                 )
                 for j in range(4)
@@ -349,3 +342,4 @@ ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
 ax.view_init(elev=-145, azim=4)
 plt.show()
+
