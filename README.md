@@ -19,3 +19,7 @@ Link to the wiki for the scikit-vectors library: https://github.com/t-o-k/scikit
 ### Frenet Frames along curve example
 [Jupyter notebook](Frenet_Frames_along_curve.ipynb)\
 ![Frenet Frames along curve](images/Frenet_Frames_along_curve.png)
+
+### Offset Curves along a parametric curve example
+[Jupyter notebook](Offset_Curves_along_a_parametric_curve.ipynb)\
+![Offset Curves along a parametric curve](images/Offset_Curves_along_a_parametric_curve.png)
