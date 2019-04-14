@@ -27,40 +27,23 @@ figure_size = (8, 8)
 figure_dpi = 100
 
 
-# The functions for a parametric "flower" curve
+# Trefoil knot in 2D
 
 def f_x(t):
 
-    return 0.5 + 0.46 * (3 * np.cos(5 * t - np.pi / 6) + 2 * np.sin(3 * t)) / 5
+    r = np.sqrt(2 + np.sqrt(3))
+
+    return r * np.cos(2 * t - 3 / 2 * np.pi) - np.sin(t)
 
 
 def f_y(t):
 
-    return 0.5 + 0.46 * (3 * np.sin(5 * t - np.pi / 6) + 2 * np.cos(3 * t)) / 5
+    r = np.sqrt(2 + np.sqrt(3))
+
+    return r * np.sin(2 * t - 3 / 2 * np.pi) - np.cos(t)
 
 
-# Numerical approximation of the first derivative of a univariate function
-
-def first_derivative(fn, h=1e-4):
-
-    h2 = 2 * h
-
-
-    def d1_fn(t):
-
-        return (fn(t + h) - fn(t - h)) / h2
-
-
-    return d1_fn
-
-
-# Create derivative functions for the curve
-
-d1_f_x = first_derivative(f_x)
-d1_f_y = first_derivative(f_y)
-
-
-no_of_points_along_curve = 800
+no_of_points_along_curve = 3 * 2**8 + 1
 
 
 # Necessary NumPy functions
@@ -102,7 +85,7 @@ NP2 = \
 
 # Calculate the points along the curve
 
-angles_along_curve = np.linspace(-np.pi, +np.pi, no_of_points_along_curve, endpoint=True)
+angles_along_curve = np.linspace(0, 2*np.pi, no_of_points_along_curve, endpoint=True) + np.pi
 
 p_o = \
     NP2(
@@ -119,6 +102,27 @@ ax.plot(p_o.x, p_o.y, color='darkblue', linewidth=10)
 ax.plot(p_o.x, p_o.y, color='deepskyblue', linewidth=4)
 ax.axis('equal')
 plt.show()
+
+
+# Numerical approximation of the first derivative of a univariate function
+
+def first_derivative(fn, h=1e-4):
+
+    h2 = 2 * h
+
+
+    def d1_fn(t):
+
+        return (fn(t + h) - fn(t - h)) / h2
+
+
+    return d1_fn
+
+
+# Create derivative functions for the curve
+
+d1_f_x = first_derivative(f_x)
+d1_f_y = first_derivative(f_y)
 
 
 # Calculate vectors from the first derivatives at the points along the curve
@@ -140,34 +144,36 @@ v_t = v_d1.normalize()
 v_n = v_t.perp()
 
 
-# Show some of the tangent vectors and the normal vectors along the curve
+# Show some of the tangent vectors (red) and the normal vectors (blue) along the curve
 
-s = 8  # stride
+s = 16  # stride
+
+sl = slice(None, -1, s)
 
 fig, ax = plt.subplots(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.30, 0.05, url)
+ax.quiver(
+    p_o.x[sl], p_o.y[sl],
+    v_t.x[sl], v_t.y[sl],
+    width = 0.003,
+    color = 'red',
+    scale = 3, 
+    scale_units = 'xy',
+    pivot = 'middle'
+)
+ax.quiver(
+    p_o.x[sl], p_o.y[sl],
+    v_n.x[sl], v_n.y[sl],
+    width = 0.003,
+    color = 'blue',
+    scale = 3, 
+    scale_units = 'xy',
+    pivot = 'middle'
+)
 ax.scatter(
-    p_o.x[::s], p_o.y[::s],
+    p_o.x[sl], p_o.y[sl],
     color = 'black',
     marker = '.'
-)
-ax.quiver(
-    p_o.x[::s], p_o.y[::s],
-    v_t.x[::s], v_t.y[::s],
-    width = 0.002,
-    color = 'red',
-    scale = 20, 
-    scale_units = 'xy',
-    pivot = 'middle'
-)
-ax.quiver(
-    p_o.x[::s], p_o.y[::s],
-    v_n.x[::s], v_n.y[::s],
-    width = 0.002,
-    color = 'blue',
-    scale = 20, 
-    scale_units = 'xy',
-    pivot = 'middle'
 )
 ax.axis('equal')
 plt.show()
@@ -175,7 +181,8 @@ plt.show()
 
 # Calculate points for two offset curves
 
-d = 0.048 / 2
+d = 0.1
+
 p_dm = p_o - d * v_n
 p_dp = p_o + d * v_n
 
@@ -189,45 +196,14 @@ fig.text(0.30, 0.05, url)
 ax.plot(*p_dm, c='orange', linewidth=lw)
 ax.plot(*p_dp, c='khaki', linewidth=lw)
 ax.plot(*p_o, c='firebrick', linewidth=lw)
-ax.axis('equal')
-plt.show()
-
-
-# Calculate points for four more offset curves
-
-a = 0.0133 - 0.0025
-p_am = p_o - a * v_n
-p_ap = p_o + a * v_n
-
-b = 0.0133 + 0.0025
-p_bm = p_o - b * v_n
-p_bp = p_o + b * v_n
-
-
-# Calculate points for two more offset curves closer to the "center"
-
-c = 0.0025
-p_cm = p_o - c * v_n
-p_cp = p_o + c * v_n
-
-
-# Show these points for these six offset curves
-
-fig, ax = plt.subplots(figsize=figure_size, dpi=figure_dpi)
-fig.text(0.30, 0.05, url)
-ax.scatter(p_bm.x, p_bm.y, c='b', marker='.')
-ax.scatter(p_am.x, p_am.y, c='r', marker='.')
-ax.scatter(p_cm.x, p_cm.y, c='m', marker='.')
-ax.scatter(p_cp.x, p_cp.y, c='y', marker='.')
-ax.scatter(p_ap.x, p_ap.y, c='g', marker='.')
-ax.scatter(p_bp.x, p_bp.y, c='c', marker='.')
+ax.set_facecolor('gray')
 ax.axis('equal')
 plt.show()
 
 
 # Prepare for plotting with quad patches (between pairs of offset curves) instead of lines
 
-def Patches(p_e, p_f, color='grey'):
+def Patches(p_e, p_f, color='black'):
 
     no_of_points = len(p_e.cnull)
 
@@ -246,23 +222,115 @@ def Patches(p_e, p_f, color='grey'):
             for j, k in zip(range(0, no_of_points-1), range(1, no_of_points))
         ]
 
+
+# Calculate points for the offset curves
+
+d = 0.04
+p_cm = p_o - d * v_n
+p_cp = p_o + d * v_n
+
+a = 2 * d
+p_am = p_o - a * v_n
+p_ap = p_o + a * v_n
+
+b = 4 * d
+p_bm = p_o - b * v_n
+p_bp = p_o + b * v_n
+
+
+# Create the patches
+
 patches_outer = Patches(p_am, p_bm)
 patches_inner = Patches(p_ap, p_bp)
 patches_center = Patches(p_cm, p_cp)
 
 
-# Prepare colors that cycle along the curves
+# Show every second of the patches along the curves
 
-c = 2 * np.pi / (no_of_points_along_curve / 32)
-d = 2 * np.pi * (1 / 2 + 1 / 16)
+s = 2
 
-color_value = \
-    np.array(
-        [
-            (np.sin(i * c - d) + 1) / 2
-            for i in range(no_of_points_along_curve)
-        ]
+sl1 = slice(None, 1 - s * 2, s * 2)
+sl2 = slice(s * 2 - 1, None, s * 2)
+
+fig, ax = plt.subplots(figsize=figure_size, dpi=figure_dpi)
+fig.text(0.30, 0.05, url)
+ax.add_collection(
+    PatchCollection(
+        patches_inner[sl1],
+        # match_original = True,
+        color = 'lightgoldenrodyellow'
     )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_inner[sl2],
+        # match_original = True,
+        color = 'lightgoldenrodyellow'
+    )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_outer[sl1],
+        # match_original = True,
+        color = 'lightgoldenrodyellow'
+    )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_outer[sl2],
+        # match_original = True,
+        color ='lightgoldenrodyellow'
+    )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_center[sl1],
+        # match_original = True,
+        color = 'lightcoral'
+    )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_center[sl2],
+        # match_original = True,
+        color = 'lightcoral'
+    )
+)
+ax.set_facecolor('gray')
+ax.axis('equal')
+plt.show()
+
+
+# Calculate points for more offset curves
+
+# NB: The order of the operands in the first multiplication matters here
+v_n_w = v_n * np.sin(12 * angles_along_curve)
+
+d = 0.04
+p_cm = p_o - d * v_n_w
+p_cp = p_o + d * v_n_w
+
+a = 2 * d
+p_am = p_o - a * v_n_w
+p_ap = p_o + a * v_n_w
+
+b = 4 * d
+p_bm = p_o - b * v_n_w
+p_bp = p_o + b * v_n_w 
+
+
+# Create more patches
+
+patches_outer_w = Patches(p_am, p_bm)
+patches_inner_w = Patches(p_ap, p_bp)
+patches_center_w = Patches(p_cm, p_cp)
+
+
+# Prepare values for choosing colors from a color map
+
+phase_shift = np.pi / (no_of_points_along_curve - 1)
+angles_for_color = 12 * (angles_along_curve + phase_shift)
+values_for_color = (np.cos(angles_for_color) + 1) / 2
 
 
 # Show the curves with colors cycling
@@ -272,89 +340,75 @@ fig.text(0.30, 0.05, url)
 ax = fig.add_subplot(1, 1, 1)
 ax.add_collection(
     PatchCollection(
-        patches_inner,
-        # match_original = True,
-        array = color_value,
-        cmap = plt.cm.plasma
+        patches_inner_w,
+        array = values_for_color,
+        cmap = plt.cm.PuOr
     )
 )
 ax.add_collection(
     PatchCollection(
-        patches_outer,
-        # match_original = True,
-        array = color_value,
-        cmap = plt.cm.plasma
+        patches_outer_w,
+        array = values_for_color,
+        cmap = plt.cm.PuOr
     )
 )
 ax.add_collection(
     PatchCollection(
-        patches_center,
-        # match_original = True,
-        array = color_value,
-        cmap = plt.cm.plasma
+        patches_center_w,
+        array = values_for_color,
+        cmap = plt.cm.PuOr
     )
 )
+# ax.set_facecolor('grey')
 ax.axis('equal')
 plt.show()
 
 
-# Show every other patch along the curves
+# Show every second of the patches along the curves
 
-s = 2  # stride
+s = 2
+
+sl1 = slice(None, 1 - s * 2, s * 2)
+sl2 = slice(s * 2 - 1, None, s * 2)
 
 fig, ax = plt.subplots(figsize=figure_size, dpi=figure_dpi)
 fig.text(0.30, 0.05, url)
 ax.add_collection(
     PatchCollection(
-        patches_inner[::s],
-        facecolor='powderblue',
-        edgecolor='powderblue'
+        patches_inner_w[sl1],
+        color = 'powderblue'
     )
 )
 ax.add_collection(
     PatchCollection(
-        patches_outer[::s],
-        facecolor='lightgoldenrodyellow',
-        edgecolor='lightgoldenrodyellow'
+        patches_inner_w[sl2],
+        color = 'powderblue'
     )
 )
 ax.add_collection(
     PatchCollection(
-        patches_center[::s],
-        facecolor='lightcoral',
-        edgecolor='lightcoral'
+        patches_outer_w[sl1],
+        color = 'powderblue'
     )
 )
-ax.set_facecolor('gray')
+ax.add_collection(
+    PatchCollection(
+        patches_outer_w[sl2],
+        color = 'powderblue'
+    )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_center_w[sl1],
+        color = 'lightgoldenrodyellow'
+    )
+)
+ax.add_collection(
+    PatchCollection(
+        patches_center_w[sl2],
+        color = 'lightgoldenrodyellow'
+    )
+)
+ax.set_facecolor('grey')
 ax.axis('equal')
 plt.show()
-
-
-# Calculate points for some other offset curves that are further apart
-
-a = 0.0133
-p_am = p_o - a * v_n
-p_ap = p_o + a * v_n
-
-b = 0.0133 + 0.1000
-p_bm = p_o - b * v_n
-p_bp = p_o + b * v_n
-
-
-# Now try to be a bit artistic...
-
-lw = 1
-
-fig, ax = plt.subplots(figsize=figure_size, dpi=figure_dpi)
-fig.text(0.30, 0.05, url)
-# ax.plot(*p_am, c='seagreen', linewidth=lw)
-# ax.plot(*p_bm, c='seagreen', linewidth=lw)
-# ax.plot(*p_ap, c='crimson', linewidth=lw)
-# ax.plot(*p_bp, c='crimson', linewidth=lw)
-# ax.plot(*zip(p_am, p_ap), c='black', linewidth=lw)
-ax.plot(*zip(p_am, p_bm), c='lightseagreen', linewidth=lw)
-ax.plot(*zip(p_ap, p_bp), c='deeppink', linewidth=lw)
-ax.plot(*p_o, c='black', linewidth=lw)
-ax.axis('equal')
-plt.show()
-
