@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/t-o-k/scikit-vectors_examples/master)
+
 # scikit-vectors examples
 
 This repository contains example files for the scikit-vectors Python library.
